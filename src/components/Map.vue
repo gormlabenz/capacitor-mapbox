@@ -1,6 +1,7 @@
 <script setup>
 import mapbox from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import { Motion } from '@capacitor/motion'
 
 const mapContainer = ref(null)
 mapbox.accessToken = import.meta.env.VITE_MAPBOX_TOKEN
@@ -23,6 +24,21 @@ onMounted(() => {
     rotateCamera(event.target, 0)
   })
 })
+
+const initEventListener = async () => {
+  try {
+    await DeviceMotionEvent.requestPermission()
+  } catch (e) {
+    // Handle error
+    return
+  }
+
+  // Once the user approves, can start listening:
+  await Motion.addListener('orientation', (event) => {
+    console.log('Device motion event:', event)
+  })
+}
+initEventListener()
 </script>
 
 <template>

@@ -3,6 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@capacitor/cli': ^3.5.0
   '@capacitor/core': ^3.5.0
+  '@capacitor/motion': ^1.0.5
   '@iconify-json/carbon': ^1.1.2
   '@types/node': ^17.0.23
   '@vitejs/plugin-vue': ^2.3.0
@@ -31,6 +32,7 @@ specifiers:
 
 dependencies:
   '@capacitor/core': 3.5.0
+  '@capacitor/motion': 1.0.5_@capacitor+core@3.5.0
   '@vueuse/core': 8.2.0_vue@3.2.31
   mapbox-gl: 2.8.2
   vue: 3.2.31
@@ -121,6 +123,14 @@ packages:
     resolution: {integrity: sha512-+CFSG+CztpFIir9gGqNEtAYuf6OWryQ8dojXoeozAkoz3mKvyFfcEfvLVPo/pw/B4zHIlNnJLHne6vbjAFbDKQ==}
     dependencies:
       tslib: 2.4.0
+    dev: false
+
+  /@capacitor/motion/1.0.5_@capacitor+core@3.5.0:
+    resolution: {integrity: sha512-BO8a2hFY7iBAuE/vd/+3sHvyzGz2SA7KReU90RZa02J7JmpgPD+g8bCdVBzqhZGyuLuP0RQ4RNqQJRgW27N7rA==}
+    peerDependencies:
+      '@capacitor/core': ^3.0.0
+    dependencies:
+      '@capacitor/core': 3.5.0
     dev: false
 
   /@eslint/eslintrc/1.2.1:
