@@ -3,7 +3,7 @@
   "packageManager": "pnpm@6.32.3",
   "scripts": {
     "build": "vite build",
-    "dev": "vite --port 3333 --open",
+    "dev": "vite --port 3333 --open --host 0.0.0.0",
     "lint": "prettier --write  --config .prettierrc '**/*.{js,vue}' '!**/node_modules/**'",
     "typecheck": "vue-tsc --noEmit",
     "preview": "vite preview",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@capacitor/core": "^3.5.0",
-    "@capacitor/motion": "^1.0.5",
+    "@capacitor/ios": "^3.5.0",
     "@vueuse/core": "^8.2.0",
     "mapbox-gl": "^2.8.2",
     "vue": "^3.2.31",
