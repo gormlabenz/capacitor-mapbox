@@ -1,3 +1,3 @@
 import { registerPlugin } from '@capacitor/core'
 
-export const Echo = registerPlugin('Echo')
+export const Compass = registerPlugin('Compass')
