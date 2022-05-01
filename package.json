@@ -11,6 +11,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@capacitor/android": "^3.5.0",
     "@capacitor/core": "^3.5.0",
     "@capacitor/ios": "^3.5.0",
     "@capacitor/motion": "^1.0.5",

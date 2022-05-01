@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@capacitor/android': ^3.5.0
   '@capacitor/cli': ^3.5.0
   '@capacitor/core': ^3.5.0
   '@capacitor/ios': ^3.5.0
@@ -32,6 +33,7 @@ specifiers:
   vue-tsc: ^0.33.9
 
 dependencies:
+  '@capacitor/android': 3.5.0_@capacitor+core@3.5.0
   '@capacitor/core': 3.5.0
   '@capacitor/ios': 3.5.0_@capacitor+core@3.5.0
   '@capacitor/motion': 1.0.5_@capacitor+core@3.5.0
@@ -95,6 +97,14 @@ packages:
     resolution: {integrity: sha512-Gr86ujcNuPDnNOY8mi383Hvi8IYrJVJYuf3XcuBM/Dgd+bINn/7tHqsj+tKkoreMbmGsFLsltI/JJd8fOFWGDQ==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+
+  /@capacitor/android/3.5.0_@capacitor+core@3.5.0:
+    resolution: {integrity: sha512-1SiTMMdd+urvDRrSLDmrFUU9Ldm8B2mUzVNvx8u1zgagZVPNQLoMY4WX8EkpPjt4+D6YIoBjdqb72LID9Iip6A==}
+    peerDependencies:
+      '@capacitor/core': ^3.5.0
+    dependencies:
+      '@capacitor/core': 3.5.0
+    dev: false
 
   /@capacitor/cli/3.5.0:
     resolution: {integrity: sha512-URRAfCbrXufaxRCsDR68m0H3PPndyd4UyfhF4Y+DM5GI1i+0a1SlDYx2s/Ik0ttUFuKc+StwtlmR9Bt5sYNPtQ==}

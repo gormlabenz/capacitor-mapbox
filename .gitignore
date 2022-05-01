@@ -10,4 +10,5 @@ node_modules
 test/__snapshots__/**
 .env
 ios/
+android/
 !plugins/**/*
