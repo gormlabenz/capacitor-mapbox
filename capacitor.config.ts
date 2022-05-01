@@ -5,10 +5,10 @@ const config: CapacitorConfig = {
   appName: 'Capmap',
   webDir: 'dist',
   bundledWebRuntime: false,
-  /*   server: {
-    url: 'http://169.254.176.51:3333/',
+  server: {
+    url: 'http://192.168.178.21:3333/',
     cleartext: true,
-  }, */
+  },
 }
 
 export default config

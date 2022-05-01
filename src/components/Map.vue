@@ -23,7 +23,7 @@ watch(
   () => {
     if (map && !isInteracting.value) {
       map.rotateTo(heading.value.magneticHeading, {
-        duration: heading.value.trueHeading,
+        duration: 0,
       })
     }
   },

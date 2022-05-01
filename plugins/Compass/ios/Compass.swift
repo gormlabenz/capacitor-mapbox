@@ -15,6 +15,7 @@ import CoreLocation
 public class Compass: CAPPlugin, CLLocationManagerDelegate {
     var magneticHeading: Double = .zero
     let locationManager = CLLocationManager()
+   
     
     override public func load() {
         self.setup()
@@ -23,8 +24,9 @@ public class Compass: CAPPlugin, CLLocationManagerDelegate {
     private func setup() {
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.delegate = self
+        self.locationManager.headingFilter = 0.01
+        
         if CLLocationManager.headingAvailable() {
-            self.locationManager.startUpdatingLocation()
             self.locationManager.startUpdatingHeading()
         }
     }
@@ -34,8 +36,8 @@ public class Compass: CAPPlugin, CLLocationManagerDelegate {
         self.notifyListeners(
             "heading",
             data: [
+                "timestamp": newHeading.timestamp,
                 "magneticHeading": newHeading.magneticHeading,
-                "trueHeading": newHeading.trueHeading,
             ]
         )
     }
