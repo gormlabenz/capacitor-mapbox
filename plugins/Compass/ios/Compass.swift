@@ -13,38 +13,34 @@ import CoreLocation
 @available(iOS 13.0, *)
 @objc(Compass)
 public class Compass: CAPPlugin, CLLocationManagerDelegate {
-    var magneticHeading: Double = .zero
     let locationManager = CLLocationManager()
    
-    
-    override public func load() {
-        self.setup()
-    }
-    
-    private func setup() {
-        self.locationManager.requestWhenInUseAuthorization()
+    @objc func setup(_ call: CAPPluginCall) {
         self.locationManager.delegate = self
-        self.locationManager.headingFilter = 0.01
-        
-        if CLLocationManager.headingAvailable() {
-            self.locationManager.startUpdatingHeading()
-        }
+        self.locationManager.headingFilter = 0.1
+        call.resolve([:])
     }
     
     public func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        self.magneticHeading = newHeading.magneticHeading
         self.notifyListeners(
             "heading",
             data: [
-                "timestamp": newHeading.timestamp,
                 "magneticHeading": newHeading.magneticHeading,
             ]
         )
     }
-    
-    @objc func getMagneticHeading(_ call: CAPPluginCall) {
-        call.resolve(["magneticHeading": self.magneticHeading])
+
+    @objc func start(_ call: CAPPluginCall) {
+        if CLLocationManager.headingAvailable() {
+            self.locationManager.startUpdatingHeading()
+        }
+        call.resolve([:])
     }
 
-    
+    @objc func stop(_ call: CAPPluginCall) {
+        if CLLocationManager.headingAvailable() {
+            self.locationManager.stopUpdatingHeading()
+        }
+        call.resolve([:])
+    }
 }
