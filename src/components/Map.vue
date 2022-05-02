@@ -17,6 +17,7 @@ onMounted(() => {
     center: [13.453557155315018, 52.51959827780059], // starting position [lng, lat]
     zoom: 12, // starting zoom
   })
+
   map.on('load', () => {
     removeMapboxElements()
     addMarkers()
