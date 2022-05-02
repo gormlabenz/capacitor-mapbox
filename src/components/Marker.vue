@@ -46,12 +46,17 @@ const getStyle = () => {
   if (min < 0) {
     scale = 0
   } else if (min < MIN_DISTANCE) {
-    scale = (1 / MIN_DISTANCE) * min
+    scale = interpolate((1 / MIN_DISTANCE) * min)
   }
   return {
     transform: `scale(${scale})`,
     transformOrigin: `${edge} center`,
   }
+}
+
+// interpolate between 1 and 0 in easeInOutQuad
+const interpolate = (value) => {
+  return Math.pow(value, 2)
 }
 
 watch(
