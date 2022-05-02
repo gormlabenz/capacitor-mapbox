@@ -2,6 +2,7 @@
 import mapbox from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { magneticHeading } from '~/composables'
+import Marker from './Marker.vue'
 
 const mapContainer = ref(null)
 mapbox.accessToken = import.meta.env.VITE_MAPBOX_TOKEN
@@ -12,9 +13,13 @@ onMounted(() => {
     container: mapContainer.value, // container ID
     style: 'mapbox://styles/mapbox/light-v10', // style URL
     center: [13.453557155315018, 52.51959827780059], // starting position [lng, lat]
-    zoom: 9, // starting zoom
+    zoom: 12, // starting zoom
   })
-  map.on('load', () => removeMapboxElements())
+  map.on('load', () => {
+    removeMapboxElements()
+    addMarkers()
+    console.log(map.getBounds())
+  })
 })
 
 const isInteracting = ref(false)
@@ -33,6 +38,27 @@ watch(magneticHeading, () => {
     })
   }
 })
+
+// add random markers to map inside the current viewport
+const addMarkers = () => {
+  const bounds = map.getBounds()
+  const width = bounds.getEast() - bounds.getWest()
+  const height = bounds.getNorth() - bounds.getSouth()
+
+  const markers = []
+
+  const el = document.getElementById('marker')
+  for (let i = 0; i < 300; i++) {
+    markers.push(
+      new mapbox.Marker(el.cloneNode(true))
+        .setLngLat([
+          bounds.getWest() - width / 2 + Math.random() * width * 2,
+          bounds.getSouth() - height / 2 + Math.random() * height * 2,
+        ])
+        .addTo(map)
+    )
+  }
+}
 </script>
 
 <template>
@@ -44,6 +70,7 @@ watch(magneticHeading, () => {
   >
     <div ref="mapContainer" class="w-full h-full"></div>
   </div>
+  <Marker id="marker"></Marker>
 </template>
 
 <style>

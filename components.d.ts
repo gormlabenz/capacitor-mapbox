@@ -5,6 +5,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
     Map: typeof import('./src/components/Map.vue')['default']
+    Marker: typeof import('./src/components/Marker.vue')['default']
   }
 }
 
