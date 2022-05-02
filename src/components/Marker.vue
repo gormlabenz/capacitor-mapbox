@@ -7,8 +7,10 @@
     <div
       ref="marker"
       :style="style"
-      class="bg-red-500 w-full h-full rounded-full absolute"
-    ></div>
+      class="border-red-500 border-2 overflow-hidden w-full h-full rounded-full absolute"
+    >
+      <img src="https://picsum.photos/200" class="" alt="" />
+    </div>
   </div>
 </template>
 
@@ -37,6 +39,10 @@ const getStyle = () => {
   const distanceToEdges = getDistanceToEdges()
   const min = Math.min(...Object.values(distanceToEdges))
 
+  const edge = Object.keys(distanceToEdges).find(
+    (key) => distanceToEdges[key] === min
+  )
+
   if (min < 0) {
     scale = 0
   } else if (min < MIN_DISTANCE) {
@@ -44,6 +50,7 @@ const getStyle = () => {
   }
   return {
     transform: `scale(${scale})`,
+    transformOrigin: `${edge} center`,
   }
 }
 
