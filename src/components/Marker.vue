@@ -8,8 +8,9 @@
 
 <script setup>
 import { center } from '~/composables'
-const MIN_DISTANCE = 100
+const MIN_DISTANCE = 50
 const marker = ref(null)
+
 const style = ref({})
 
 const getDistanceToEdges = () => {
@@ -28,7 +29,9 @@ const getStyle = () => {
   const distanceToEdges = getDistanceToEdges()
   const min = Math.min(...Object.values(distanceToEdges))
 
-  if (min < MIN_DISTANCE) {
+  if (min < 0) {
+    scale = 0
+  } else if (min < MIN_DISTANCE) {
     scale = (1 / MIN_DISTANCE) * min
   }
 
