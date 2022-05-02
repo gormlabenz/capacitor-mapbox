@@ -3,6 +3,7 @@ import mapbox from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { magneticHeading } from '~/composables'
 import Marker from './Marker.vue'
+import { createApp } from 'vue/dist/vue.esm-bundler'
 
 const mapContainer = ref(null)
 mapbox.accessToken = import.meta.env.VITE_MAPBOX_TOKEN
@@ -18,7 +19,6 @@ onMounted(() => {
   map.on('load', () => {
     removeMapboxElements()
     addMarkers()
-    console.log(map.getBounds())
   })
 })
 
@@ -48,9 +48,13 @@ const addMarkers = () => {
   const markers = []
 
   const el = document.getElementById('marker')
-  for (let i = 0; i < 300; i++) {
+
+  for (let i = 0; i < 10; i++) {
+    const parent = document.createElement('div')
+    createApp(Marker).mount(parent)
+
     markers.push(
-      new mapbox.Marker(el.cloneNode(true))
+      new mapbox.Marker(parent)
         .setLngLat([
           bounds.getWest() - width / 2 + Math.random() * width * 2,
           bounds.getSouth() - height / 2 + Math.random() * height * 2,
@@ -70,11 +74,4 @@ const addMarkers = () => {
   >
     <div ref="mapContainer" class="w-full h-full"></div>
   </div>
-  <Marker id="marker"></Marker>
 </template>
-
-<style>
-.mapboxgl-ctrl {
-  display: none;
-}
-</style>
