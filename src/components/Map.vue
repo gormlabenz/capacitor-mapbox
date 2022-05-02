@@ -4,6 +4,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { magneticHeading } from '~/composables'
 import Marker from './Marker.vue'
 import { createApp } from 'vue/dist/vue.esm-bundler'
+import { center } from '~/composables'
 
 const mapContainer = ref(null)
 mapbox.accessToken = import.meta.env.VITE_MAPBOX_TOKEN
@@ -19,6 +20,10 @@ onMounted(() => {
   map.on('load', () => {
     removeMapboxElements()
     addMarkers()
+  })
+
+  map.on('move', (data) => {
+    center.value = map.getCenter()
   })
 })
 
@@ -49,7 +54,7 @@ const addMarkers = () => {
 
   const el = document.getElementById('marker')
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 1; i++) {
     const parent = document.createElement('div')
     createApp(Marker).mount(parent)
 

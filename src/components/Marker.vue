@@ -1,16 +1,45 @@
 <template>
-  <div ref="marker" class="h-6 w-6 bg-red-500 rounded-full"></div>
+  <div
+    ref="marker"
+    :style="style"
+    class="h-12 w-12 bg-red-500 rounded-full absolute"
+  ></div>
 </template>
 
 <script setup>
+import { center } from '~/composables'
+const MIN_DISTANCE = 100
 const marker = ref(null)
-const markerBoundingRect = useElementBounding(marker)
+const style = ref({})
 
-watch(markerBoundingRect.width, () => {
-  /* console.log('markerBoundingRect.width', markerBoundingRect.width) */
-})
+const getDistanceToEdges = () => {
+  const { left, top, right, bottom } = marker.value.getBoundingClientRect()
+  const distanceToEdges = {
+    left: left + window.scrollX,
+    top: top + window.scrollY,
+    right: window.innerWidth - right,
+    bottom: window.innerHeight - bottom,
+  }
+  return distanceToEdges
+}
 
-onMounted(() => {
-  console.log('mounted', markerBoundingRect.bottom.value)
+const getStyle = () => {
+  let scale = 1
+  const distanceToEdges = getDistanceToEdges()
+  const min = Math.min(...Object.values(distanceToEdges))
+
+  if (min < MIN_DISTANCE) {
+    scale = (1 / MIN_DISTANCE) * min
+  }
+
+  return {
+    transform: `scale(${scale})`,
+  }
+}
+
+watch(center, () => {
+  if (marker.value) {
+    style.value = getStyle()
+  }
 })
 </script>
