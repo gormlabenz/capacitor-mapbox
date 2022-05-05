@@ -6,6 +6,8 @@ import Marker from './Marker.vue'
 import { createApp } from 'vue/dist/vue.esm-bundler'
 import { center } from '~/composables'
 
+const MARKER_COUNT = 50
+
 const mapContainer = ref(null)
 mapbox.accessToken = import.meta.env.VITE_MAPBOX_TOKEN
 let map
@@ -19,8 +21,10 @@ onMounted(() => {
   })
 
   map.on('load', () => {
+    center.value = map.getCenter()
     removeMapboxElements()
-    addMarkers()
+    const markerCoordinates = getMarkerCoordinates(MARKER_COUNT)
+    addMarkers(markerCoordinates)
   })
 
   map.on('move', (data) => {
@@ -45,29 +49,31 @@ watch(magneticHeading, () => {
   }
 })
 
-// add random markers to map inside the current viewport
-const addMarkers = () => {
+const addMarkers = (markerCoordinates) => {
+  markerCoordinates.forEach((coordinates) => {
+    new mapbox.Marker(getMarker()).setLngLat(coordinates).addTo(map)
+  })
+}
+
+const getMarker = () => {
+  const parent = document.createElement('div')
+  createApp(Marker).mount(parent)
+  return parent
+}
+
+const getMarkerCoordinates = (length) => {
   const bounds = map.getBounds()
   const width = bounds.getEast() - bounds.getWest()
   const height = bounds.getNorth() - bounds.getSouth()
 
-  const markers = []
+  const markers = Array.from({ length }, () => {
+    return [
+      Math.random() * width + bounds.getWest(),
+      Math.random() * height + bounds.getSouth(),
+    ]
+  })
 
-  const el = document.getElementById('marker')
-
-  for (let i = 0; i < 1; i++) {
-    const parent = document.createElement('div')
-    createApp(Marker).mount(parent)
-
-    markers.push(
-      new mapbox.Marker(parent)
-        .setLngLat([
-          bounds.getWest() - width / 2 + Math.random() * width * 2,
-          bounds.getSouth() - height / 2 + Math.random() * height * 2,
-        ])
-        .addTo(map)
-    )
-  }
+  return markers
 }
 </script>
 
