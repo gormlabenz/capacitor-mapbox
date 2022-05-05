@@ -28,12 +28,11 @@ const getScale = (min) => {
   const offScreen = min < SIZE * -1
   if (offScreen) {
     scale = 0
-  }
-
-  if (min < 0) {
+  } else if (min < 0) {
     const v = SIZE - Math.abs(min)
     scale = v / SIZE
   }
+
   return scale
 }
 
