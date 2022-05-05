@@ -1,13 +1,13 @@
 <template>
   <div
     ref="container"
-    :style="{ width: size + 'px', height: size + 'px' }"
+    :style="{ width: SIZE + 'px', height: SIZE + 'px' }"
     class="flex justify-center items-center"
   >
     <div
       ref="marker"
       :style="style"
-      class="border-red-500 border-2 overflow-hidden w-full h-full rounded-full absolute"
+      class="border-red-500 border-2 overflow-hidden w-full h-full rounded-full"
     >
       <img src="https://picsum.photos/200" class="" alt="" />
     </div>
@@ -16,11 +16,41 @@
 
 <script setup>
 import { center } from '~/composables'
-const MIN_DISTANCE = 15
 const marker = ref(null)
 const container = ref(null)
-const size = Math.random() * 24 + 24
 const style = ref({})
+
+const SIZE = Math.random() * 24 + 24
+
+const getScale = (min) => {
+  let scale = 1
+
+  const offScreen = min < SIZE * -1
+  if (offScreen) {
+    scale = 0
+  }
+
+  if (min < 0) {
+    const v = SIZE - Math.abs(min)
+    scale = v / SIZE
+  }
+  return scale
+}
+
+const getOrigin = (distanceToEdges, min) => {
+  const edge = Object.keys(distanceToEdges).find(
+    (key) => distanceToEdges[key] === min
+  )
+
+  origin = {
+    left: 'right',
+    top: 'bottom',
+    right: 'left',
+    bottom: 'top',
+  }
+
+  return origin[edge]
+}
 
 const getDistanceToEdges = () => {
   const { left, top, right, bottom, width, height } =
@@ -35,39 +65,23 @@ const getDistanceToEdges = () => {
 }
 
 const getStyle = () => {
-  let scale = 1
   const distanceToEdges = getDistanceToEdges()
   const min = Math.min(...Object.values(distanceToEdges))
 
-  const edge = Object.keys(distanceToEdges).find(
-    (key) => distanceToEdges[key] === min
-  )
+  const scale = getScale(min)
+  const origin = getOrigin(distanceToEdges, min)
 
-  if (min < 0) {
-    scale = 0
-  } else if (min < MIN_DISTANCE) {
-    scale = interpolate((1 / MIN_DISTANCE) * min)
-  }
   return {
     transform: `scale(${scale})`,
-    transformOrigin: `${edge} center`,
+    transformOrigin: `${origin} center`,
   }
 }
 
-// interpolate between 1 and 0 in easeInOutQuad
-const interpolate = (value) => {
-  return Math.pow(value, 2)
-}
+watch(center, () => {
+  if (marker.value) style.value = getStyle()
+})
 
-watch(
-  center,
-  () => {
-    if (marker.value) {
-      style.value = getStyle()
-    }
-  },
-  {
-    immediate: true,
-  }
-)
+onMounted(() => {
+  if (marker.value) style.value = getStyle()
+})
 </script>

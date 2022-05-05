@@ -55,7 +55,7 @@ const addMarkers = () => {
 
   const el = document.getElementById('marker')
 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 1; i++) {
     const parent = document.createElement('div')
     createApp(Marker).mount(parent)
 
