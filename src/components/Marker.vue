@@ -7,7 +7,7 @@
     <div
       ref="marker"
       :style="style"
-      class="border-red-500 border-2 overflow-hidden w-full h-full rounded-full"
+      class="border-[#EC674E] border-2 overflow-hidden w-full h-full rounded-full"
     >
       <img src="https://picsum.photos/200" class="" alt="" />
     </div>

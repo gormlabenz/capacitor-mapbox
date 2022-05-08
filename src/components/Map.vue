@@ -15,7 +15,7 @@ let map
 onMounted(() => {
   map = new mapbox.Map({
     container: mapContainer.value, // container ID
-    style: 'mapbox://styles/mapbox/light-v10', // style URL
+    style: 'mapbox://styles/gormlabenz/cjohonoex80r92slb2yu629ww',
     center: [13.453557155315018, 52.51959827780059], // starting position [lng, lat]
     zoom: 12, // starting zoom
   })
@@ -79,7 +79,7 @@ const getMarkerCoordinates = (length) => {
 
 <template>
   <div
-    class="w-screen h-screen overflow-hidden"
+    class="w-screen h-screen overflow-hidden bg-[#FFBC42]"
     @touchstart="isInteracting = true"
     @touchend="isInteracting = false"
     @click="rotate"
@@ -87,3 +87,48 @@ const getMarkerCoordinates = (length) => {
     <div ref="mapContainer" class="w-full h-full"></div>
   </div>
 </template>
+
+<style>
+.background {
+  background: linear-gradient(267deg, #ffb01f, #d81159, #218380);
+  background-size: 600% 600%;
+
+  -webkit-animation: gradient 17s ease infinite;
+  -moz-animation: gradient 17s ease infinite;
+  animation: gradient 17s ease infinite;
+}
+
+@-webkit-keyframes gradient {
+  0% {
+    background-position: 0% 18%;
+  }
+  50% {
+    background-position: 100% 83%;
+  }
+  100% {
+    background-position: 0% 18%;
+  }
+}
+@-moz-keyframes gradient {
+  0% {
+    background-position: 0% 18%;
+  }
+  50% {
+    background-position: 100% 83%;
+  }
+  100% {
+    background-position: 0% 18%;
+  }
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 18%;
+  }
+  50% {
+    background-position: 100% 83%;
+  }
+  100% {
+    background-position: 0% 18%;
+  }
+}
+</style>
