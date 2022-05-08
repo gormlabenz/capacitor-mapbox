@@ -1,8 +1,13 @@
 <template>
   <div
     ref="container"
-    :style="{ width: SIZE + 'px', height: SIZE + 'px' }"
-    class="flex justify-center items-center"
+    :style="{
+      width: SIZE + 'px',
+      height: SIZE + 'px',
+      top: coordinated.x + 'px',
+      left: coordinated.y + 'px',
+    }"
+    class="flex justify-center items-center absolute"
   >
     <div
       ref="marker"
@@ -15,7 +20,7 @@
 </template>
 
 <script setup>
-import { map, center } from '~/composables'
+import { map, center, project } from '~/composables'
 const marker = ref(null)
 const container = ref(null)
 const style = ref({})
@@ -23,13 +28,13 @@ const style = ref({})
 const SIZE = Math.random() * 24 + 24
 
 const props = defineProps({
-  lonLat: {
+  markerCoordinate: {
     type: Array,
-    default: () => [0, 0],
+    required: true,
   },
 })
 
-const { lonLat } = toRefs(props)
+const coordinated = ref([0, 0])
 
 const getScale = (min) => {
   let scale = 1
@@ -86,11 +91,12 @@ const getStyle = () => {
 }
 
 watch(center, () => {
+  coordinated.value = project(props.markerCoordinate)
   if (marker.value) style.value = getStyle()
 })
 
 onMounted(() => {
+  coordinated.value = project(props.markerCoordinate)
   if (marker.value) style.value = getStyle()
-  console.log('map', map)
 })
 </script>

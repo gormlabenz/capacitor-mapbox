@@ -9,13 +9,16 @@ onMounted(() => {
 
 <template>
   <div
-    class="w-screen h-screen overflow-hidden"
+    class="w-screen h-screen overflow-hidden bg-[#FFBC42]"
     @touchstart="isInteracting = true"
     @touchend="isInteracting = false"
     @click="rotate"
   >
-    <div class="absolute z-20" v-for="markerCoordinate in markerCoordinates">
-      <Marker :lonLat="markerCoordinate"></Marker>
+    <div
+      class="absolute pointer-events-none w-screen h-screen overflow-hidden"
+      v-for="markerCoordinate in markerCoordinates"
+    >
+      <Marker :markerCoordinate="markerCoordinate"></Marker>
     </div>
     <div ref="mapContainer" class="w-full h-full"></div>
   </div>
