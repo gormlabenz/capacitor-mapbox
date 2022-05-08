@@ -10,9 +10,9 @@ let map
 onMounted(() => {
   map = new mapbox.Map({
     container: mapContainer.value, // container ID
-    style: 'mapbox://styles/mapbox/light-v10', // style URL
+    style: 'mapbox://styles/gormlabenz/cjohonoex80r92slb2yu629ww',
     center: [13.453557155315018, 52.51959827780059], // starting position [lng, lat]
-    zoom: 9, // starting zoom
+    zoom: 14, // starting zoom
   })
   map.on('load', () => removeMapboxElements())
 })
@@ -37,7 +37,7 @@ watch(magneticHeading, () => {
 
 <template>
   <div
-    class="w-screen h-screen overflow-hidden"
+    class="w-screen h-screen overflow-hidden bg-[#FFBC42]"
     @touchstart="isInteracting = true"
     @touchend="isInteracting = false"
     @click="rotate"
