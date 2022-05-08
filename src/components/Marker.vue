@@ -15,12 +15,21 @@
 </template>
 
 <script setup>
-import { center } from '~/composables'
+import { map, center } from '~/composables'
 const marker = ref(null)
 const container = ref(null)
 const style = ref({})
 
 const SIZE = Math.random() * 24 + 24
+
+const props = defineProps({
+  lonLat: {
+    type: Array,
+    default: () => [0, 0],
+  },
+})
+
+const { lonLat } = toRefs(props)
 
 const getScale = (min) => {
   let scale = 1
@@ -82,5 +91,6 @@ watch(center, () => {
 
 onMounted(() => {
   if (marker.value) style.value = getStyle()
+  console.log('map', map)
 })
 </script>
